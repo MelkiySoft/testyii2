@@ -106,3 +106,15 @@ Internal error
 ```
 {"error": "internal error"}
 ```
+
+QUERY EXAMPLES
+--------------
+```
+http://test1.yii2.loc/api/add?id=12341234123412341234123412341234&user=BarackObama&secret=247e7cd10d6b1e7912f5d0ea24401df1b2e371a6
+```
+```
+http://test1.yii2.loc/api/feed?id=12341234123412341234123412341234&secret=e4fdc00365cc7b0b700907dded89c981fb0587cb
+```
+```
+http://test1.yii2.loc/api/remove?id=12341234123412341234123412341234&user=BarackObama&secret=247e7cd10d6b1e7912f5d0ea24401df1b2e371a6
+```
