@@ -118,3 +118,10 @@ http://test1.yii2.loc/api/feed?id=12341234123412341234123412341234&secret=e4fdc0
 ```
 http://test1.yii2.loc/api/remove?id=12341234123412341234123412341234&user=BarackObama&secret=247e7cd10d6b1e7912f5d0ea24401df1b2e371a6
 ```
+
+Example of the client part for testing
+--------------------------------------
+```
+http://test1.yii2.loc/client
+```
+The script itself generates id, and calculates sha1
