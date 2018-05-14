@@ -44,18 +44,26 @@ class ApiController extends AppController {
         }
     }
 
+    /**
+     * create a file /config/twitterConnect.php and add an array there with your data to connect to the Twitter api
+     *
+     * @param $userFromTwitter
+     * @param $countTwits
+     * @return array|object
+     */
     public function getTwitsUser($userFromTwitter, $countTwits)
     {
         //$url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2";
 
-        $access_token = '994491498430332928-BDi9RtESYAGKGTEu9VbJaVybAb8phH6';
-        $access_token_secret = 'DEJrBXYueSKQ1WVUnrNr9cUCSwrtzJcGgEda4PLTAOrCP';
-        $consumer_key = 'Eg73HgyncYoD5fIkb5RejON1B';
-        $consumer_secret = 'JtQyUe8Jqu4dJNdRJ6eJfxxqRMUfdI9XphExMc217iZMZWUU3H';
-        //define('CONSUMER_KEY', $consumer_key);
-        //define('CONSUMER_SECRET', $consumer_secret);
+        $tConnect = require (__DIR__ . '/../config/twitterConnect.php');
 
-        $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+        $connection = new TwitterOAuth(
+            $tConnect['consumer_key'],
+            $tConnect['consumer_secret'],
+            $tConnect['access_token'],
+            $tConnect['access_token_secret']
+        );
+
         //$content = $connection->get("account/verify_credentials"); //!!!!!
         //$content = $connection->get("statuses/user_timeline", ["screen_name" => "BarackObama", "count" => 3]); //!!!!!
         $content = $connection->get("statuses/user_timeline", ["screen_name" => $userFromTwitter, "count" => $countTwits]);
@@ -120,6 +128,7 @@ class ApiController extends AppController {
         $this->verificationSecret($id, $secret);
 
         $twittUsers = TwittUser::find()->all();
+
         if (count($twittUsers) == 0) {
             die;
         }
@@ -133,7 +142,7 @@ class ApiController extends AppController {
             //проход по твитам
             foreach ($tmp as $value) {
                 $hashtag = [];
-
+//var_dump($value);
                 //проход по хештегам
                 foreach ($value->entities->hashtags as $key2 => $item) {
                     //var_dump($item->text);
@@ -142,7 +151,7 @@ class ApiController extends AppController {
                 $response['feed'][] = ['user' => $twittUser->name, 'tweet' => $value->text, 'hashtag' => $hashtag];
             }
         }
-
+//die;
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         exit;
