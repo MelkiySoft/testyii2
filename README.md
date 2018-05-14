@@ -80,9 +80,13 @@ http://php.net/manual/en/function.sha1.php
 Example:
 ```
 {endpoint}/add?id=WBYX1TLPRWJ7NSV36LCPP2OZFH6AE6LM&user=elonmusk
+```
+calculates sha1:
+```
 sha1(WBYX1TLPRWJ7NSV36LCPP2OZFH6AE6LMelonmusk)=3dfb3e37b62f0f13ceca0df
 a87a860b007a29e73
 ```
+result query:
 ```
 {endpoint}/add?id=WBYX1TLPRWJ7NSV36LCPP2OZFH6AE6LM&user=elonmusk&secret=
 3dfb3e37b62f0f13ceca0dfa87a860b007a29e73
