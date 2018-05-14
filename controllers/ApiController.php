@@ -7,38 +7,45 @@ use app\models\TwittUser;
 
 class ApiController extends AppController {
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         return '';
     }
 
-    public function sendError ($answer) {
+    public function sendError ($answer)
+    {
         echo json_encode(['error' => $answer]);
         die;
     }
 
-    public function getSha($id, $user = '') {
+    public function getSha($id, $user = '')
+    {
         return sha1($id . $user);
     }
 
-    public function verificationId($id) {
+    public function verificationId($id)
+    {
         if (strlen($id) != 32) {
             $this->sendError('wrong id');
         }
     }
 
-    public function verificationSecret($id, $secret, $user = '') {
+    public function verificationSecret($id, $secret, $user = '')
+    {
         if ($secret !== $this->getSha($id, $user)) {
             $this->sendError('access denied');
         }
     }
 
-    public function verificationMissingParameters($id, $secret, $user = '') {
+    public function verificationMissingParameters($id, $secret, $user = '')
+    {
         if($id == '' || $secret == '' || $user == '') {
             $this->sendError('missing parameter');
         }
     }
 
-    public function getTwitsUser($userFromTwitter, $countTwits) {
+    public function getTwitsUser($userFromTwitter, $countTwits)
+    {
         //$url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2";
 
         $access_token = '994491498430332928-BDi9RtESYAGKGTEu9VbJaVybAb8phH6';
@@ -56,8 +63,8 @@ class ApiController extends AppController {
         return $content;
     }
 
-    public function actionAdd($id = '', $user = '', $secret = '') {
-
+    public function actionAdd($id = '', $user = '', $secret = '')
+    {
         $this->verificationMissingParameters($id, $secret, $user);
         $this->verificationId($id);
         $this->verificationSecret($id, $secret, $user);
@@ -78,6 +85,9 @@ class ApiController extends AppController {
         }
     }
 
+    /**
+     * temporary method. Can be deleted
+     */
     public function actionHelpwithsha1($id = '', $user = '', $secret = '') {
         $this->verificationId($id);
         return
@@ -88,8 +98,14 @@ class ApiController extends AppController {
             'sha1:' . $this->getSha($id, $user) . '<br>';
     }
 
-    public function actionFeed($id = '', $secret = '') {
-
+    /**
+     * will show tweets from users from the database
+     *
+     * @param string $id
+     * @param string $secret
+     */
+    public function actionFeed($id = '', $secret = '')
+    {
         $this->verificationMissingParameters($id, $secret, true);
         $this->verificationId($id);
         $this->verificationSecret($id, $secret);
@@ -123,7 +139,15 @@ class ApiController extends AppController {
         exit;
     }
 
-    public function actionRemove($id = '', $user = '', $secret = '') {
+    /**
+     * will remove the user from the database
+     *
+     * @param string $id
+     * @param string $user
+     * @param string $secret
+     */
+    public function actionRemove($id = '', $user = '', $secret = '')
+    {
 
         $this->verificationMissingParameters($id, $secret, $user);
         $this->verificationId($id);
