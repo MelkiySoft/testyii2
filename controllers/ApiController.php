@@ -63,6 +63,14 @@ class ApiController extends AppController {
         return $content;
     }
 
+    /**
+     * will add the user to the database
+     * example: http://test1.yii2.loc/api/add?id=12341234123412341234123412341234&user=MichelleObama&secret=61bf3f8f325db59d2a2500ded72e5de0e609760e
+     *
+     * @param string $id
+     * @param string $user
+     * @param string $secret
+     */
     public function actionAdd($id = '', $user = '', $secret = '')
     {
         $this->verificationMissingParameters($id, $secret, $user);
@@ -100,6 +108,7 @@ class ApiController extends AppController {
 
     /**
      * will show tweets from users from the database
+     * example: http://test1.yii2.loc/api/feed?id=12341234123412341234123412341234&secret=e4fdc00365cc7b0b700907dded89c981fb0587cb
      *
      * @param string $id
      * @param string $secret
@@ -141,6 +150,7 @@ class ApiController extends AppController {
 
     /**
      * will remove the user from the database
+     * example: http://test1.yii2.loc/api/remove?id=12341234123412341234123412341234&user=BarackObama&secret=247e7cd10d6b1e7912f5d0ea24401df1b2e371a6
      *
      * @param string $id
      * @param string $user
